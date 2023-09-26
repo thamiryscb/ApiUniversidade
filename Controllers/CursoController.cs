@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 [HttpGet]
 public ActionResult<Enumerable<Curso> Get()
 {
-    var cursos = context.Cursos.ToList();
+    var cursos = _context.Cursos.ToList();
     if(cursos is null)
         return NotFound();
 
