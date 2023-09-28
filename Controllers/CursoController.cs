@@ -5,12 +5,27 @@ using System.Threading.Tasks;
 using apiUniversidade.Model;
 using Microsoft.AspNetCore.Mvc;
 
-[HttpGet]
-public ActionResult<Enumerable<Curso> Get()
+namespace apiUniversidade.Controllers
 {
-    var cursos = _context.Cursos.ToList();
-    if(cursos is null)
-        return NotFound();
+    [ApiController]
+    [Route("[controller]")]
+    public class CursoController : ControllerBase
+    {
+        private reandoly ILoger<CursoController> _logger;
+        private reandoly apiUniversidadeContext _context;
+        public CursoController(ILogger<CursoController> logger, ApiUniversidadeContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
+        [HttpGet]
+        public ActionResult<IEnumerable<Curso>> Get()
+        {
+            var cursos = context.Cursos.ToList();
+            if(cursos is null)
+                return NotFound();
 
-    return cursos;
+            return cursos;
+        }
+    }
 }
