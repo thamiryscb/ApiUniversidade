@@ -27,7 +27,7 @@ namespace ApiUniversidade.Controllers
                 return "AutorizaController :: Acessado em: " + DateTime.Now.ToLongDateString();
             }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
             public async Task<ActionResult> RegisterUser([FromBody]UsuarioDTO model){
                 var user = new IdentityUser{
                     UserName = model.Email,
@@ -42,6 +42,18 @@ namespace ApiUniversidade.Controllers
                 await _signInManager.SignInAsync(user, false);
                 //return Ok(GerarToken(model));
                 return Ok();
+            }
+        
+        [HttpPost("login")]
+            public async Task<ActionResult> Login([FromBody]UsuarioDTO userInfo){
+                var result = await _signInManager.PasswordSignInAsync(userInfo.Email, userInfo.Password, 
+                    isPersistent: false, lockoutOnFailure: false);
+                if(result.Succeeded)
+                    return Ok();
+                else{
+                    ModelState.AddModelError(string.Empty,"Login Inválido...");
+                    return BadRequest(ModelState);
+                }
             }
     }
 }
