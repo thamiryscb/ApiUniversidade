@@ -74,7 +74,7 @@ namespace ApiUniversidade.Controllers
 
                 await _signInManager.SignInAsync(user, false);
                 //return Ok(GerarToken(model));
-                return Ok();
+                return Ok(GeraToken(model));
             }
         
         [HttpPost("login")]
@@ -82,7 +82,7 @@ namespace ApiUniversidade.Controllers
                 var result = await _signInManager.PasswordSignInAsync(userInfo.Email, userInfo.Password, 
                     isPersistent: false, lockoutOnFailure: false);
                 if(result.Succeeded)
-                    return Ok();
+                    return Ok(GeraToken(userInfo));
                 else{
                     ModelState.AddModelError(string.Empty,"Login Inválido...");
                     return BadRequest(ModelState);
