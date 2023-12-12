@@ -21,6 +21,20 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(Options =>
+        Options.TokenValidationParameters = new TokenValidationParameters{
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidAudience = builder.Configuration["TokenConfiguration:Audience"],
+            ValidIssuer = builder.Configuration["TokenConfiguration: Issuer"],
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))}
+            );
+            
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,15 +54,3 @@ app.MapControllers();
 
 app.Run();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(Options =>
-        Options.TokenValidationParameters = new TokenValidationParameters{
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidAudience = builder.Configuration["TokenConfiguration:Audience"],
-            ValidIssuer = builder.Configuration["TokenConfiguration: Issuer"],
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))}
-            );
