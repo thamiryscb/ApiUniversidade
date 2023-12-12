@@ -29,12 +29,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidAudience = builder.Configuration["TokenConfiguration:Audience"],
-            ValidIssuer = builder.Configuration["TokenConfiguration: Issuer"],
+            ValidIssuer = builder.Configuration["TokenConfiguration:Issuer"],
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))}
             );
-            
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
