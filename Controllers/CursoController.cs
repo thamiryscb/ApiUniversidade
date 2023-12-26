@@ -13,7 +13,7 @@ namespace apiUniversidade.Controllers
 {
     [Authorize(AuthenticationSchemes ="Bearer")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/{v:apiversion}/curso")]
     public class CursoController : ControllerBase
     {
         private readonly ILogger<CursoController> _logger;
@@ -23,6 +23,14 @@ namespace apiUniversidade.Controllers
             _logger = logger;
             _context = context;
         }
+
+        [HttpGet(Name = "GetExemplo")]
+        [Route("exemplo")]
+        public String GetExemplo()
+        {
+            return "Api v1";
+        }
+        
         [HttpGet]
         public ActionResult<IEnumerable<Curso>> Get()
         {
