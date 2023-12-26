@@ -13,6 +13,7 @@ namespace apiUniversidade.Controllers
 {
     [Authorize(AuthenticationSchemes ="Bearer")]
     [ApiController]
+    [ApiVersion("1.0")]
     [Route("api/{v:apiversion}/curso")]
     public class CursoController : ControllerBase
     {
@@ -30,7 +31,7 @@ namespace apiUniversidade.Controllers
         {
             return "Api v1";
         }
-        
+
         [HttpGet]
         public ActionResult<IEnumerable<Curso>> Get()
         {
